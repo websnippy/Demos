@@ -1,0 +1,688 @@
+<!doctype html>
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Page Scrolling Animation Effects Demo</title>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+	/* ---------------------------------------------------------------------
+   		Reset
+	--------------------------------------------------------------------- */
+	* {
+		font-size: 100%;
+		margin: 0;
+		outline: 0 none;
+		padding: 0;
+		vertical-align: baseline;
+	}
+
+	html {
+		box-sizing: border-box;
+		font-family: sans-serif;
+		font-size: 10px;
+
+		-webkit-font-smoothing: antialiased;
+		 -moz-osx-font-smoothing: grayscale;
+		 text-rendering: optimizelegibility;
+	}
+
+	*,
+	*:before,
+	*:after { box-sizing: inherit; }
+
+	article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+	  display: block;
+	}
+
+	img {
+		border: 0 none;
+		height: auto;
+		max-width: 100%;
+		vertical-align: middle;
+	}
+
+	a { text-decoration: none; }
+
+	html, body { overflow-x: hidden; }
+
+	/* ---------------------------------------------------------------------
+	   Typography
+	--------------------------------------------------------------------- */
+	body {
+		font-family: 'Open Sans', sans-serif;
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: 400;
+		line-height: 1.1;
+	}
+
+	@media(max-width:767px) {
+		body { font-size: 14px; }
+	}
+
+	/* ---------------------------------------------------------------------
+	   Colour Sheme
+	--------------------------------------------------------------------- */
+	body {
+		color: #000;
+	}
+
+	/* ---------------------------------------------------------------------
+	   Repeated Patterns
+	--------------------------------------------------------------------- */
+	input, textarea {
+		border: 1px solid #ececec;
+		color: #000;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 16px;
+		height: 50px;
+		padding: 6px 12px;
+		width: 100%;
+	}
+
+	textarea { height: 150px; }
+
+	button {
+		border: 0 none;
+		cursor: pointer;
+	}
+
+	.sec-col-2,
+	.sec-col-4 {
+		float: left;
+		padding: 0 15px;
+	}
+	.sec-col-2 { width: 50%; }
+	.sec-col-4 { width: 25%; }
+
+	@media(max-width:991px) {
+		.sec-col-2 { width: 100%; }
+	}
+
+	.inner-wrap:after {
+		clear: both;
+		content: "";
+		display: table;
+	}
+
+	.inner-wrap {
+		margin: 0 auto;
+		max-width: 1170px;
+		padding: 0 15px;
+		width: 100%;
+	}
+
+	.text-center { text-align: center; }
+	.text-right { text-align: right; }
+
+	.site-content section.section { padding: 70px 0; }
+	.sec-title { margin-bottom: 50px; }
+	.sec-title.white { color: #fff; }
+	.sec-title.white h2 { color: #fff; }
+
+	.sec-title h2:after {
+		border-bottom: 1px solid #009ee3;
+		bottom: 0;
+		content: "";
+		display: block;
+		left: 50%;
+		margin-left: -58px;
+		position: absolute;
+		width: 116px;
+	}
+
+	.sec-title.white h2:after { border-bottom-color: white; }
+
+	.sec-title h2 {
+		font-size: 36px;
+		margin: 0 0 30px;
+		padding-bottom: 30px;
+		position: relative;
+		text-transform: uppercase;
+	}
+
+	.animatequeue { visibility: hidden; }
+	.animated { visibility: visible; }
+
+	/* ---------------------------------------------------------------------
+	   Header
+	--------------------------------------------------------------------- */
+	.site-header {
+		background-color: #333;
+		background-color: hsla(0, 0%, 0%, 0.4);
+		left: 0;
+		padding: 10px 15px;
+		position: fixed;
+		text-align: right;
+		top: 0;
+		width: 100%;
+		z-index: 9;
+	}
+
+	.site-header a { color: #fff; }
+
+	/* ---------------------------------------------------------------------
+	   Home Slider
+	--------------------------------------------------------------------- */
+	.page-caption {
+		color: #333;
+		display: table;
+		height: 100%;
+		left: 0;
+		min-height: 100%;
+		position: absolute;
+		text-align: center;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.page-caption .page-content {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	/* ---------------------------------------------------------------------
+	   About
+	--------------------------------------------------------------------- */
+	#about {
+		background-color: #009ee3;
+		color: #fff;
+	}
+
+	ul.circle-list { padding: 15px 0 0; }
+
+	ul.circle-list li {
+		border-top: 1px solid #e6e6e6;
+		list-style-type: disc;
+		margin-left: 25px;
+		padding: 9px 0;
+		position: relative;
+	}
+
+
+	ul.circle-list li:first-child { border-top: 0 none; }
+
+	/* ---------------------------------------------------------------------
+	   Services
+	--------------------------------------------------------------------- */
+	#services {
+		background-color: #ff6666;
+		color: #fff;
+	}
+
+	.service-icon {
+		display: inline-block;
+		height: 85px;
+		line-height: 101px;
+		width: 85px;
+	}
+
+	.service-item h3 {
+		font-size: 20px;
+		text-transform: uppercase;
+	}
+
+	.services-link {
+		clear: both;
+		padding-top: 100px;
+	}
+
+	@media(max-width:767px) {
+		#services .sec-col-4 { width: 100%; }
+	}
+
+
+	/* ---------------------------------------------------------------------
+	   Social
+	--------------------------------------------------------------------- */
+	#social {
+		background-color: #00c2a9;
+	}
+
+	.social-button { text-align: center; }
+	.social-button li {
+		display: inline-block;
+		margin: 0 25px;
+	}
+
+	.social-button li a {
+		border: 2px solid #fff;
+		border-radius: 50%;
+		color: #fff;
+		display: block;
+		height: 90px;
+		line-height: 96px;
+		width: 90px;
+
+		-webkit-transition: all 0.2s ease 0s;
+		   -moz-transition: all 0.2s ease 0s;
+			-ms-transition: all 0.2s ease 0s;
+			 -o-transition: all 0.2s ease 0s;
+				transition: all 0.2s ease 0s;
+	}
+
+	.social-button li a:hover {
+		border: 2px solid #008ecc;
+		color: #008ecc;
+	}
+
+	/* ---------------------------------------------------------------------
+	   Footer
+	--------------------------------------------------------------------- */
+	.site-footer {
+		background-color: #2e2e2e;
+		color: #ccc;
+		font-size: 12px;
+		padding: 10px;
+		text-align: center;
+	}
+
+    .animated {
+		-webkit-animation-duration: 1s;
+		animation-duration: 1s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+
+	@-webkit-keyframes fadeInDown {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateY(-20px);
+			 transform: translateY(-20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateY(0);
+			 transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeInDown {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateY(-20px);
+			 -ms-transform: translateY(-20px);
+			 transform: translateY(-20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateY(0);
+			 -ms-transform: translateY(0);
+			 transform: translateY(0);
+		}
+	}
+
+	.fadeInDown {
+		-webkit-animation-name: fadeInDown;
+		animation-name: fadeInDown;
+	}
+
+	@-webkit-keyframes fadeInLeft {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(-20px);
+			 transform: translateX(-20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	@keyframes fadeInLeft {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(-20px);
+			 -ms-transform: translateX(-20px);
+			 transform: translateX(-20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateX(0);
+			 -ms-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	.fadeInLeft {
+		-webkit-animation-name: fadeInLeft;
+		animation-name: fadeInLeft;
+	}
+
+	@-webkit-keyframes fadeInRight {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(20px);
+			 transform: translateX(20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	@keyframes fadeInRight {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(20px);
+			 -ms-transform: translateX(20px);
+			 transform: translateX(20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateX(0);
+			 -ms-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	.fadeInRight {
+		-webkit-animation-name: fadeInRight;
+		animation-name: fadeInRight;
+	}
+
+	@-webkit-keyframes bounceInLeft {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(-2000px);
+			 transform: translateX(-2000px);
+		}
+		 60% {
+			 opacity: 1;
+			 -webkit-transform: translateX(30px);
+			 transform: translateX(30px);
+		}
+		 80% {
+			 -webkit-transform: translateX(-10px);
+			 transform: translateX(-10px);
+		}
+		 100% {
+			 -webkit-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	@keyframes bounceInLeft {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(-2000px);
+			 -ms-transform: translateX(-2000px);
+			 transform: translateX(-2000px);
+		}
+		 60% {
+			 opacity: 1;
+			 -webkit-transform: translateX(30px);
+			 -ms-transform: translateX(30px);
+			 transform: translateX(30px);
+		}
+		 80% {
+			 -webkit-transform: translateX(-10px);
+			 -ms-transform: translateX(-10px);
+			 transform: translateX(-10px);
+		}
+		 100% {
+			 -webkit-transform: translateX(0);
+			 -ms-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	.bounceInLeft {
+		-webkit-animation-name: bounceInLeft;
+		animation-name: bounceInLeft;
+	}
+
+	@-webkit-keyframes bounceInRight {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(2000px);
+			 transform: translateX(2000px);
+		}
+		 60% {
+			 opacity: 1;
+			 -webkit-transform: translateX(-30px);
+			 transform: translateX(-30px);
+		}
+		 80% {
+			 -webkit-transform: translateX(10px);
+			 transform: translateX(10px);
+		}
+		 100% {
+			 -webkit-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	@keyframes bounceInRight {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateX(2000px);
+			 -ms-transform: translateX(2000px);
+			 transform: translateX(2000px);
+		}
+		 60% {
+			 opacity: 1;
+			 -webkit-transform: translateX(-30px);
+			 -ms-transform: translateX(-30px);
+			 transform: translateX(-30px);
+		}
+		 80% {
+			 -webkit-transform: translateX(10px);
+			 -ms-transform: translateX(10px);
+			 transform: translateX(10px);
+		}
+		 100% {
+			 -webkit-transform: translateX(0);
+			 -ms-transform: translateX(0);
+			 transform: translateX(0);
+		}
+	}
+
+	.bounceInRight {
+		-webkit-animation-name: bounceInRight;
+		animation-name: bounceInRight;
+	}
+
+	@-webkit-keyframes fadeInUp {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateY(20px);
+			 transform: translateY(20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateY(0);
+			 transform: translateY(0);
+		}
+	}
+
+	@keyframes fadeInUp {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: translateY(20px);
+			 -ms-transform: translateY(20px);
+			 transform: translateY(20px);
+		}
+		 100% {
+			 opacity: 1;
+			 -webkit-transform: translateY(0);
+			 -ms-transform: translateY(0);
+			 transform: translateY(0);
+		}
+	}
+
+	.fadeInUp {
+		-webkit-animation-name: fadeInUp;
+		animation-name: fadeInUp;
+	}
+
+	@-webkit-keyframes zoomIn {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: scale(.3);
+			 transform: scale(.3);
+		}
+		 50% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes zoomIn {
+		 0% {
+			 opacity: 0;
+			 -webkit-transform: scale(.3);
+			 -ms-transform: scale(.3);
+			 transform: scale(.3);
+		}
+		 50% {
+			opacity: 1;
+		}
+	}
+
+	.zoomIn {
+		-webkit-animation-name: zoomIn;
+		animation-name: zoomIn;
+	}
+    </style>
+
+    <!--[if lt IE 9]>
+    	<script src="http://pagespeed.brilliancetechsols.com/js/html5shiv.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<header class="site-header"> <a href="https://websnippy.blogspot.com/2016/06/how-to-create-page-scrolling-animation.html">Back to Snippet</a> </header>
+<main class="site-content">
+  <section style="background-color:#ffff4d;height:100vh;width:100%;">
+    <div class="page-caption">
+        <div class="page-content">
+             <h1 style="color:#000;font-size:40px;">Scroll Down to see the effects</h1>
+        </div>
+    </div>
+  </section>
+  <section class="section" id="about">
+    <div class="inner-wrap">
+      <div class="sec-title text-center white animatequeue" data-effect="fadeInDown">
+        <h2>Lorem Ipsum is simply dummy text</h2>
+      </div>
+      <div class="sec-col-2 animatequeue" data-effect="fadeInLeft">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+      since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <ul class="list circle-list">
+          <li>Lorem Ipsum is simply dummy text of the printing and</li>
+          <li>Lorem Ipsum is simply dummy text of the printing</li>
+          <li>Lorem Ipsum is simply dummy text of the</li>
+          <li>Lorem Ipsum is simply dummy text of the printing</li>
+          <li>Lorem Ipsum is simply dummy text of the printing and </li>
+        </ul>
+      </div>
+      <div class="sec-col-2 animatequeue" data-effect="fadeInRight">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <ul class="list circle-list">
+          <li>Lorem Ipsum is simply dummy text of the printing and</li>
+          <li>Lorem Ipsum is simply dummy text of the printing</li>
+          <li>Lorem Ipsum is simply dummy text of the</li>
+          <li>Lorem Ipsum is simply dummy text of the printing</li>
+          <li>Lorem Ipsum is simply dummy text of the printing and </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="services">
+    <div class="inner-wrap">
+      <div class="sec-title white text-center">
+        <h2 class="animatequeue" data-effect="bounceInLeft">Lorem Ipsum</h2>
+        <p class="animatequeue" data-effect="bounceInRight">simply dummy text of the printing and typesetting</p>
+      </div>
+      <div class="sec-col-4 text-center animatequeue" data-effect="zoomIn">
+        <div class="service-item">
+          <div class="service-icon"> <i class="fa fa-clock-o fa-3x"></i> </div>
+          <h3>Lorem Ipsum</h3>
+        </div>
+      </div>
+      <div class="sec-col-4 text-center animatequeue" data-effect="zoomIn">
+        <div class="service-item">
+          <div class="service-icon"> <i class="fa fa-tasks fa-3x"></i> </div>
+          <h3>Lorem Ipsum</h3>
+        </div>
+      </div>
+      <div class="sec-col-4 text-center animatequeue" data-effect="zoomIn">
+        <div class="service-item">
+          <div class="service-icon"> <i class="fa fa-heart fa-3x"></i> </div>
+          <h3>Lorem Ipsum</h3>
+        </div>
+      </div>
+      <div class="sec-col-4 text-center animatequeue" data-effect="zoomIn">
+        <div class="service-item">
+          <div class="service-icon"> <i class="fa fa-home fa-3x"></i> </div>
+          <h3>Lorem Ipsum</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <section class="section" id="social">
+
+      <div class="inner-wrap">
+        <div class="sec-title text-center white animatequeue" data-effect="fadeInDown">
+          <h2>Lorem Ipsum</h2>
+          <p>simply dummy text of the printing and typesetting industry</p>
+        </div>
+        <ul class="social-button">
+          <li class="animatequeue" data-effect="zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-2x"></i></a></li>
+          <li class="animatequeue" data-effect="zoomIn"><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+          <li class="animatequeue" data-effect="zoomIn"><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+        </ul>
+      </div>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="inner-wrap">
+    <p>THE END</p>
+  </div>
+</footer>
+    <!-- CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+   	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css' rel='stylesheet'/>
+
+    <!-- Essential jQuery Plugins -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+		var $window = $(window);
+		$window.on('scroll resize load', animateQueue);
+		function animateQueue() {
+			var $animateElems = $('.animatequeue'),
+				winHeight     = $window.height(),
+				winTopPos     = $window.scrollTop(),
+				winBtmPos     = (winTopPos + winHeight);
+
+			 $.each($animateElems, function() {
+				var currentEl  = $(this),
+					ElemEffect = currentEl.attr('data-effect'),
+					ElemHeight = currentEl.outerHeight(),
+					ElemTopPos = currentEl.offset().top,
+					ElemBtmPos = (Math.floor(ElemTopPos) + ElemHeight);
+
+				if ( (ElemTopPos <= winBtmPos) && (ElemBtmPos >= winTopPos) ) {
+					if( !currentEl.hasClass('animated') ) { currentEl.addClass(ElemEffect+' animated'); }
+				}
+			 });
+		}
+	});
+    </script>
+</body>
+</html>

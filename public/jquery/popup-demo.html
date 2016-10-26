@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Popup Demo</title>
+<!-- Mobile Specific Meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
+<![endif]-->
+<style type="text/css">
+* {
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+}
+
+body {
+	color: #333;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.site-header {
+	background-color: #4d90f0;
+	font-size: 14px;
+	padding: 10px 15px;
+	text-align: right;
+}
+
+.site-header a { color: #fff; }
+.site-header a:hover { text-decoration: none; }
+
+.v-center {
+	display: table;
+	height: 80vh;
+	text-align: center;
+	width: 100%;
+}
+
+@media \0screen\,screen\9 {
+	.v-center { height: 500px; }
+}
+
+h1 {
+	font-size: 5vw;
+	margin-bottom: 25px;
+}
+
+.open-popup {
+	background-color: #fff;
+	border: 1px solid #bbb;
+	border-radius: 4px;
+	color: #333;
+	display: inline-block;
+	font-size: 14px;
+	padding: 0.5em 0.8em;
+	text-decoration: none;
+	transition: background-color 1s ease 0s;
+}
+
+.open-popup:hover { background-color: #ddd; }
+
+.popup-wrap {
+	font-family: 'Roboto', sans-serif;
+	display: none;
+	height: 100%;
+	left: 0;
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 9;
+}
+.popup-outer {
+	box-sizing: border-box;
+	margin: 0 auto;
+	max-width: 960px;
+	padding: 30px 15px;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+.popup-box {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+	background-clip: padding-box;
+	width: 100%;
+}
+.popup-box .popup-header {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 20px;
+	position: relative;
+}
+.popup-box .popup-header h3 {
+	padding-right: 15px;
+}
+.popup-close {
+	color: #bbb;
+	display: inline-block;
+	font-size: 24px;
+	position: absolute;
+	right: 15px;
+	text-decoration: none;
+	top: 10px;
+	transition: color 1s ease 0s;
+}
+.popup-close:hover {
+	color: #222;
+}
+.popup-scroll {
+	max-height: 400px;
+	overflow: auto;
+	position: relative;
+}
+.popup-box .popup-body {
+	padding: 20px;
+}
+.popup-box .popup-footer {
+	background-color: #f8f8f8;
+	background-color: hsla(0, 0%, 0%, 0.02);
+	border-top: 1px solid #ddd;
+	padding: 1em;
+}
+.popup-overlay {
+	background-color: #000;
+	background-color: hsla(0, 0%, 0%, 0.3);
+	filter:alpha(opacity=70);
+	height: 100%;
+	left: 0;
+	opacity: 0.7;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+.popup-box p {
+	margin-bottom: 15px;
+}
+.popup-box p:last-child {
+	margin-bottom: 0;
+}
+.extra-wrap {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+.extra-inner {
+	display: table-cell;
+	vertical-align: middle;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+ $('#open_popup').on('click', function() {
+  $('#popup_01').fadeIn()
+ });
+
+ $('.popup-close').on('click', function() {
+  $(this).closest('.popup-wrap').fadeOut();
+ });
+});
+</script>
+</head>
+
+<body>
+<header class="site-header">
+<a href="https://websnippy.blogspot.com/2016/05/how-to-create-html-popup-using-jquery.html">Back to Snippet</a>
+</header>
+
+<section class="v-center">
+  <div class="extra-inner">
+    <h1>Basic Popup Demo</h1>
+    <a href="javascript:void(0);" id="open_popup" class="open-popup">Open Popup</a> </div>
+</section>
+
+<div id="popup_01" class="popup-wrap">
+  <div class="popup-overlay"></div>
+  <div class="extra-wrap">
+    <div class="extra-inner">
+      <div class="popup-outer">
+        <div class="popup-box">
+          <header class="popup-header"> <a class="popup-close" href="javascript:void(0);">×</a>
+            <h3>Basic Pop Up</h3>
+          </header>
+          <div class="popup-scroll">
+            <div class="popup-body">
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+          </div>
+          <footer class="popup-footer"></footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
